@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:latest
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: admin12345
+      MYSQL_DATABASE: dashboard-dynamo-db
+      MYSQL_USER: shussain
+      MYSQL_PASSWORD: admin12345
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+  mysql-workbench:
+    image: mysql/mysql-workbench
+    depends_on:
+      - mysql
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix
+    environment:
+      - DISPLAY=unix$DISPLAY
+      - GDK_SCALE
+      - GDK_DPI_SCALE
+    command: "--net=host"
+    networks:
+      - default
+
+volumes:
+  mysql_data:
+
+networks:
+  default:
+    external:
+      name: bridge
