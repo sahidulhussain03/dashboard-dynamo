@@ -7,6 +7,9 @@ import { dark } from "@clerk/themes";
 import "./globals.css";
 import Navigation from "@/components/site/navigation";
 import { ThemeProvider } from "@/providers/theme-provider";
+import ModalProvider from "@/providers/modal-provider";
+import { Toaster } from '@/components/ui/toaster'
+import { Toaster as SonnarToaster } from '@/components/ui/sonner'
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -29,7 +32,11 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          {children}
+          <ModalProvider>
+            {children}
+            <Toaster />
+            <SonnarToaster position="bottom-left" />
+          </ModalProvider>
         </ThemeProvider>
       </body>
     </html>
